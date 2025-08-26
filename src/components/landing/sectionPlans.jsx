@@ -1,6 +1,6 @@
 import { Button, Card, CardFooter, CardHeader, Image } from "@nextui-org/react";
 import React from "react";
-import TabsAutoSwitch from "../herramientas/TabsAutoSwitch";
+// import TabsAutoSwitch from "../herramientas/TabsAutoSwitch";
 import SistemaPresentacion from "./SistemaPresentacion";
 
 const Pricing = (props) => {
@@ -16,7 +16,7 @@ const Pricing = (props) => {
       <SistemaPresentacion></SistemaPresentacion>
 
       {/* Sección de Tarjetas Responsivas */}
-      <TabsAutoSwitch></TabsAutoSwitch>
+      {/* <TabsAutoSwitch></TabsAutoSwitch> */}
       <section id="clientes">
         <h2
           className="text-5xl font-bold text-center p-2 text-[#1F2937]  relative block 
