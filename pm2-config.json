@@ -1,0 +1,9 @@
+{
+  "name": "suite-nextjs",
+  "script": "npm",
+  "args": "start",
+  "cwd": "/root/suite_nextjs",
+  "env": {
+    "NEXT_PUBLIC_PORT": 3001
+  }
+}

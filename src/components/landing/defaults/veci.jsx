@@ -1,0 +1,117 @@
+"use client";
+
+import Header from "@/components/landing/header";
+import Pricing from "@/components/landing/sectionPlans";
+
+export default function Home() {
+  return (
+    <div
+      className="relative flex min-h-screen flex-col bg-[#122118] dark group/design-root overflow-x-hidden"
+      style={{ fontFamily: '"Be Vietnam Pro", "Noto Sans", sans-serif' }}
+    >
+      <div className="layout-container flex h-full grow flex-col">
+        <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#264532] px-10 py-3">
+          <div className="flex items-center gap-4 text-white">
+            <div className="size-4">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z"
+                  fill="currentColor"
+                ></path>
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </div>
+            <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Veci</h2>
+          </div>
+          <div className="flex flex-1 justify-end gap-8">
+            <div className="flex items-center gap-9">
+              <a className="text-white text-sm font-medium leading-normal" href="#">Inicio</a>
+              <a className="text-white text-sm font-medium leading-normal" href="#">Funciones</a>
+              <a className="text-white text-sm font-medium leading-normal" href="#">Contacto</a>
+            </div>
+          </div>
+        </header>
+        <div className="px-40 flex flex-1 justify-center py-5">
+          <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
+            <div className="@container">
+              <div className="@[480px]:p-4">
+                <div
+                  className="flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat @[480px]:gap-8 @[480px]:rounded-xl items-start justify-end px-4 pb-10 @[480px]:px-10"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBbv4L1BSlo6U64850hQzN9GuHNE5rkGDxoYDCoDT4rf_SB9LYXubrcewIRR5i1K_YUiPnPiW9opN7RwyTGjJlR2NpVhQRdMf_4lfU76lOc7W1lVwu9-xogfmIou9yBsn93aHFwEhHIjnAnCDqGghkYi04uncS1x7SPSOExO6FcRjObVwvJQMJC3ue7tRkpu1xcw8gr4l5HmMCPJ1bEqIaeiCiltHH3Eq3xlCR2aqDB_eDJqSNoNX9vd2jRJb2s6TZU06UO2NkZimY")'
+                  }}
+                >
+                  <div className="flex flex-col gap-2 text-left">
+                    <h1 className="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]">
+                      Simplifica la administración de tu condominio con Veci
+                    </h1>
+                    <h2 className="text-white text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
+                      Veci es el sistema de administración de condominios todo en uno diseñado exclusivamente para Villa Club 4. Simplifica la administración, mejora la
+                      participación de los residentes y crea una comunidad armoniosa.
+                    </h2>
+                  </div>
+                  <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#38e078] text-[#122118] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]">
+                    <span className="truncate">Comenzar</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-10 px-4 py-10 @container">
+              <div className="flex flex-col gap-4">
+                <h1 className="text-white tracking-light text-[32px] font-bold leading-tight @[480px]:text-4xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em] max-w-[720px]">
+                  Funciones esenciales
+                </h1>
+                <p className="text-white text-base font-normal leading-normal max-w-[720px]">
+                  Veci ofrece herramientas clave para una gestión eficiente de tu comunidad de condominios.
+                </p>
+              </div>
+              <div className="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3">
+                {[
+                  "https://lh3.googleusercontent.com/aida-public/AB6AXuC48gFDKabphLgUo4q_ZLoSBBtyDpnQUMnsyWYLqrfCuLau0aIclMQIfJATfjZqgBVycimGD1ztYW-FkoG23JR60-qcNo9MKJ3L1lJW25pNXojthgrrgUxzvzgaSAYrygizdfIAlovLWd1X3toBLrl1YOBkKXwObxXzXTNXve51yXMqfSSEhv4GcNJGuwZObMWl7JdX32gxoQ_xjES13aUuZFMEiftCZz9S2FJCpM5CscLg4l1MdXbqct6qwUjDTE3qwPZjGptg5Lk",
+                  "https://lh3.googleusercontent.com/aida-public/AB6AXuALXlQwJURkwkEynbUr9PnDU_A2MX6I02Ew7_GcIivoRiBtHz7_7expFTFpQ2EfRTJML6WVTxXg_tkUMH1lUcdU0oLZMWi1fV7_mpCSYUJW-AnOeAcASK3iW-WO8Ctr3R6jV990KtpWEsOnvRYNg30S9u14ib3yTr3PeG23kqhS6aCyS92OWcWwtqMrS31Bl8z9pLFX3kUkgmjeFUkIaAOdo5FwZCurjJHZUBHgByasFysy4gtRvGsH76Yq7CUO7SOelxM1WHA7mMQ",
+                  "https://lh3.googleusercontent.com/aida-public/AB6AXuB7Ygd5n-nOoIXNZgs5RCxELPQKkBtvnuye1Ts5hPG-cBk66PttJWp87j2SarHcYfDE8nk-GhUoWTRQvHNQ-QKWtOyGNUFq1wLP7kDuH-bdtHl3YHwm1ors_MuiEEV7mmK7dMNqtYQW97gf4IxA-mGSuf7FDni8x8ZNtmOHQzdrETfePA3r0tCN-mxDmoKS7_gddZnAY5t_D3NjBHzv7pjoF8xdMQEZvaspnH7hZcxcQbp13hu6h_7cMQSs9V9tsmpz29gRBoPrnmw",
+                  "https://lh3.googleusercontent.com/aida-public/AB6AXuDK4yyfIrEAYrHMXbopW9vwfvbda6WqG-6HRNLcJxgP_oH6moRIPZ9nUDfIZ5NsFrThCDzthpTs8eKTfo0eLAPaxEiku600N18itUyUXNZ8BFgRjS0WGlgXOscn-oFw_0UQ5DLu7TtpIImf-ZCFW70-kDhHp9hjrzVfRjm9cpUy6cXR4istCAv-CjJEqtj8qbWXsZBjLBkJ3w4KwrUfdFbE8E9XpZwKcKV2Su98Lber1N0fNuZEJbLXa2Xq9W6PeNBUHSUcAKLqeOM",
+                  "https://lh3.googleusercontent.com/aida-public/AB6AXuCqz34hyxUsE655s7lcs4ruOf0KwvSn8HyPtP5cp_Mes2uUBMmlYzad7c1H3vrDioG1QrU9HaBmOAUvvhHeDl1vMxBDIAsPoRlrs2ru1PE2U1d3FaI65TDJRv7mIawmyFRTOBRd_weeiPJm0rnh4MwAxVpRJcTdKK0GOtPvBq7wwYfRvDHAUT198P-JrIhUlWCdxZ76PdhNAZ6OrCZBOQ2CeT7N6Sm8w5chsoOlbnxtkpBqDKw3FWdpKu2iKjjxMPjpPsIV3_2yYMI",
+                  "https://lh3.googleusercontent.com/aida-public/AB6AXuCUBmVxluQoVk5-5gUlRzbePvWTiZf_O4IHzJnCIO9zQmFdFB0RLNT0TRVgW5SSTshlpV_yH9yagTJxt5neh57qz77bUM8kREQmzCNfqcsjIR_hDLxlmyvs5EbSfVDBFGO0ZQK5HHLxkvX2mQ0brhlxKI-YnSAtveB3ZNRBByQQGCjDPX4sROvVL2iY16A7vbjuWqUXhbIxWwdWK4_ke_TAbUr5j7PFbyTpeb4_5XSAPwmC2RsvUOmwxjdr9_fs08LaUsSxjEgRr2g",
+                  "https://lh3.googleusercontent.com/aida-public/AB6AXuDgltEOwoRejT9gjcjuPZcvWetSEx4e7Efl_6WFtGGBYiVKP7HLHVlnmYUAOfzfFloUOUoQS_jw7G_e49L8uzPu8N-f_bqhe-11ZeCP2txPwVO3qIEt9OMpNleB5KQdtnEtPxX0oLZgDyyd9uRRYs6MywkncDHXp5Z_hdgoBKaJTH4D4Oast1I6c4MrbmgpHpW9Zls7C8UeydZmrVKH5u6MXYHQWRTcx1GGNEEf8hEEOO6sMhL8OBOk3K0VMAdqjNYac6dskYjM2Q0",
+                  "https://lh3.googleusercontent.com/aida-public/AB6AXuDz0_MTgNC-4GfQCD6zeS6t9tL82Qz1P8stF25acB0McYsdoLvUxLLetbDPwEGcjDLLXdt8ieI76-cJX7JFkFLat0vdPAdL-LeQNLLouDaYLzM1AvhDnKlIuul2izTse14Lx4ZcTeSX6KMQixMO9gyhMxBQoDNpHNYIsHIcA6_koz_8OiMd8Nods7YoSCdLsfzcAnbi14pt7mk24JG0RM0lMbQ3H52s6ytxc-qAQ9Dg2spQsGje22YFOVBrA7OZYSc9FI0SdDv1nU4",
+                  "https://lh3.googleusercontent.com/aida-public/AB6AXuBKnUJI2Wa4Lc-FkKzt9_ekqoYrsg8WI73nA8mzsG4tnI8HoPlO2E9t5SUFCUTAbCs816E1oJFbI8lSEf3JqFEeHd2zQBGAvBQzMmyZXN9WPstySOuNY5THLjKtYczKvH7OQS7DVJtFT8UriLwmBLpA-bK3Dv4Z630vO5fXbVTEZWCPw1XHo8BNrsJlXZ13MktCx9d7SDrRO20xX0eKuvVi9U-eY2L25UXKKkYyBO8zSt59qwVhK2z2gvWt2eb_ZKWkLfXeT5blayM"
+                ].map((img, i) => (
+                  <div key={i} className="flex flex-col gap-3 pb-3">
+                    <div
+                      className="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl"
+                      style={{ backgroundImage: `url("${img}")` }}
+                    ></div>
+                  </div>
+                ))}
+                {/* Puedes agregar aquí los textos y botones de cada función si lo necesitas */}
+              </div>
+            </div>
+            <p className="text-white text-base font-normal leading-normal pb-3 pt-1 px-4">
+              Con Veci, la administración de tu condominio es más fácil y eficiente. Regístrate hoy y transforma la gestión de tu comunidad.
+            </p>
+          </div>
+        </div>
+        <footer className="flex justify-center">
+          <div className="flex max-w-[960px] flex-1 flex-col">
+            <footer className="flex flex-col gap-6 px-5 py-10 text-center @container">
+              <div className="flex flex-wrap items-center justify-center gap-6 @[480px]:flex-row @[480px]:justify-around">
+                <a className="text-[#96c5a8] text-base font-normal leading-normal min-w-40" href="#">Política de privacidad</a>
+                <a className="text-[#96c5a8] text-base font-normal leading-normal min-w-40" href="#">Términos de servicio</a>
+              </div>
+              <p className="text-[#96c5a8] text-base font-normal leading-normal">© 2025 Veci. Todos los derechos reservados.</p>
+            </footer>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+}
