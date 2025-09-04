@@ -7,6 +7,7 @@ export const datosTemporales = [
     fecha_registro: "2018-10-19",
     expediente: "175200"
   },
+
   {
     id_solicitud: 2,
     dni: "12345678",
@@ -14,6 +15,7 @@ export const datosTemporales = [
     fecha_registro: "2023-05-12",
     expediente: "175201"
   },
+  
   {
     id_solicitud: 3,
     dni: "87654321",

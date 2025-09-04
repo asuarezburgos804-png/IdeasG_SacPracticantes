@@ -102,9 +102,6 @@ export default function EmisionResolucion() {
                 &lt;&lt; Volver atrás
               </Button>
               <div className="mb-2">
-                <b>Expediente:</b> <span>Visualizar</span>
-              </div>
-              <div className="mb-2">
                 <strong>N° de Expediente:</strong> {expediente}
               </div>
               <div className="mb-2">
