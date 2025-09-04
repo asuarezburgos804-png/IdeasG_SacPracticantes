@@ -9,10 +9,10 @@ export const onDescargarResolucion = (datos) => {
     // Encabezado
     //Logo Municiopalidad y Escudo del Peru
     doc.setFontSize(16);
-    doc.text("MUNICIPALIDAD DISTRITAL", 105, yPosition, { align: "center" });
+    doc.text("MUNICIPALIDAD DISTRITAL", 100, yPosition, { align: "center" });
     yPosition += 10;
     doc.setFontSize(14);
-    doc.text("RESOLUCIÓN DE ALCALDÍA", 105, yPosition, { align: "center" });
+    doc.text("RESOLUCIÓN DE ALCALDÍA", 100, yPosition, { align: "center" });
     yPosition += 15;
 
     // Datos del expediente
