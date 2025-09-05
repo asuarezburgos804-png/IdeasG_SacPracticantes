@@ -11,7 +11,7 @@ import {
   Select,
   SelectItem,
 } from "@nextui-org/react";
-import { buscarSolicitudes } from "@/app/services/Alexander/MesaDePartes/buscarSolicitudess";
+import { buscarSolicitudes } from "@/app/services/Alexander/MesaDePartes/buscarSolicitudes";
 import { obtenerTecnicos } from "@/app/services/Alexander/MesaDePartes/obtenerTecnicos";
 import { handleRegistrar } from "@/app/services/Alexander/MesaDePartes/handleRegistrar";
 import SuccessModal from "@/components/custom/custom_Alexander/CustomMesaDeParte/successModal";
@@ -33,7 +33,7 @@ export default function MesaDePartesRol() {
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (busqueda.trim().length > 0) {
-        buscarSolicitudes(busqueda);
+        buscarSolicitudes(busqueda, setResultados, setErrorMessage, setError);
       } else {
         setResultados([]);
       }
@@ -43,7 +43,7 @@ export default function MesaDePartesRol() {
 
   // Cargar técnicos al montar el componente
   useEffect(() => {
-    obtenerTecnicos();
+    obtenerTecnicos(setTecnicosList, setErrorMessage, setError);
   }, []);
 
   //Esta parte es la que visualiza
@@ -143,7 +143,24 @@ export default function MesaDePartesRol() {
                   </SelectItem>
                 ))}
               </Select>
-              <Button color="primary" onPress={handleRegistrar}>
+              <Button
+                color="primary"
+                onPress={() =>
+                  handleRegistrar(
+                    seleccionado,
+                    expediente,
+                    tecnico,
+                    setSuccess,
+                    setErrorMessage,
+                    setError,
+                    setExpediente,
+                    setTecnico,
+                    setSeleccionado,
+                    setResultados,
+                    setBusqueda
+                  )
+                }
+              >
                 Registrar
               </Button>
             </>

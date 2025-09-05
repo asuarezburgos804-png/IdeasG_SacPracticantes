@@ -8,85 +8,131 @@ import {
   Divider,
   Button,
   Input,
-  Select,
-  SelectItem,
 } from "@nextui-org/react";
-import { buscarSolicitudes } from "@/app/services/Alexander/EmisionDeResolucion/buscarSolicitudes";
-import { ModalRenderer } from "@/components/custom/custom_Alexander/CustomEmisionDeResolucion/ModalRenderer"; 
-import { onDescargarResolucion } from "@/app/services/Alexander/EmisionDeResolucion/DescargarResolucion";
+import { obtenerResoluciones } from "@/app/services/Alexander/AsesoriaLegal/obtenerResoluciones";
+import { descargarResolucion } from "@/app/services/Alexander/AsesoriaLegal/descargarResolucion";
+import { buscarResoluciones } from "@/app/services/Alexander/AsesoriaLegal/buscarResoluciones";
+import SuccessModal from "@/components/custom/custom_Alexander/CustomMesaDeParte/successModal";
+import ErrorModal from "@/components/custom/custom_Alexander/CustomMesaDeParte/errorModal";
 
-//Define estados y funciones que va a presentar la interraccion con el cuadro
 export default function EmisionResolucion() {
-  const [busqueda, setBusqueda] = useState("");
-  const [resultados, setResultados] = useState([]);
+  const [resoluciones, setResoluciones] = useState([]);
   const [seleccionado, setSeleccionado] = useState(null);
-  const [expediente, setExpediente] = useState("");
-  const [modal, setModal] = useState({ type: "", props: {} }); // Estado único para modales
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [busqueda, setBusqueda] = useState("");
+  const [cargando, setCargando] = useState(false);
 
-  // Efecto para búsqueda progresiva
+  // Efecto para búsqueda con debounce - maneja carga inicial y búsquedas
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      if (busqueda.trim().length > 0) {
-        const resultadosFiltrados = buscarSolicitudes(busqueda);
-        setResultados(resultadosFiltrados);
-      } else {
-        setResultados([]);
-      }
-    }, 300);
-    return () => clearTimeout(delayDebounceFn);
+    const timer = setTimeout(() => {
+      const loadResoluciones = async () => {
+        setCargando(true);
+        try {
+          if (busqueda.trim() === "") {
+            await obtenerResoluciones(
+              setResoluciones,
+              setErrorMessage,
+              setError
+            );
+          } else {
+            await buscarResoluciones(
+              busqueda,
+              setResoluciones,
+              setErrorMessage,
+              setError
+            );
+          }
+        } catch (error) {
+          console.error("Error cargando resoluciones:", error);
+          setErrorMessage(
+            "Error al cargar las resoluciones. Por favor, intente más tarde."
+          );
+          setError(true);
+        } finally {
+          setCargando(false);
+        }
+      };
+      loadResoluciones();
+    }, 500); // Debounce de 500ms
+
+    return () => clearTimeout(timer);
   }, [busqueda]);
 
-  // Cuando se selecciona un resultado
-  const handleSeleccionar = (item) => {
-    setSeleccionado(item);
-    setExpediente(item.expediente);
+  const handleDescargar = async () => {
+    if (!seleccionado) {
+      setErrorMessage("Debe seleccionar una resolución");
+      setError(true);
+      return;
+    }
+
+    setCargando(true);
+    const result = await descargarResolucion(
+      seleccionado.id_resolucion, // Usar id_resolucion (número) en lugar de id_expediente (string)
+      setErrorMessage,
+      setError
+    );
+
+    setCargando(false);
+    if (result) {
+      setSuccess(true);
+    }
   };
 
   return (
-    <div className="p-4 max-w-lg mx-auto">
+    <div className="p-4 max-w-4xl mx-auto">
       <Card>
         <CardHeader>
-          <h2 className="text-xl font-bold">Emision de Resolucion</h2>
+          <h2 className="text-xl font-bold">Emisión de Resolución</h2>
         </CardHeader>
         <Divider />
         <CardBody>
           {!seleccionado ? (
             <>
-              <Input
-                label="Ingrese nombre o DNI"
-                value={busqueda}
-                onChange={(e) => setBusqueda(e.target.value)}
-                className="mb-2"
-              />
+              <div className="mb-4">
+                <Input
+                  placeholder="Buscar por número de expediente, resolución, DNI, nombre o apellido..."
+                  value={busqueda}
+                  onChange={(e) => setBusqueda(e.target.value)}
+                  className="w-full"
+                />
+              </div>
               <div className="max-h-48 overflow-y-auto border rounded">
-                {resultados.length > 0 ? (
+                {cargando ? (
+                  <div className="p-4 text-center text-gray-500">
+                    Buscando resoluciones...
+                  </div>
+                ) : resoluciones.length > 0 ? (
                   <table className="min-w-full">
                     <thead>
                       <tr className="bg-gray-100">
-                        <th className="text-left p-2">DNI</th>
-                        <th className="text-left p-2">Nombre</th>
-                        <th className="text-left p-2">Fecha Registro</th>
+                        <th className="text-left p-2">N° Resolución</th>
+                        <th className="text-left p-2">N° Expediente</th>
+                        <th className="text-left p-2">Administrado</th>
+                        <th className="text-left p-2">Fecha Resolución</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {resultados.map((a) => (
+                      {resoluciones.map((resolucion) => (
                         <tr
-                          key={a.id_solicitud}
+                          key={resolucion.id_resolucion}
                           className="border-b hover:bg-blue-100 cursor-pointer"
-                          onClick={() => handleSeleccionar(a)}
+                          onClick={() => setSeleccionado(resolucion)}
                         >
-                          <td className="p-2">{a.dni}</td>
-                          <td className="p-2">{a.nombre_completo}</td>
-                          <td className="p-2">{a.fecha_registro}</td>
+                          <td className="p-2">
+                            {resolucion.numero_resolucion}
+                          </td>
+                          <td className="p-2">{resolucion.nro_expediente}</td>
+                          <td className="p-2">{resolucion.nombre_completo}</td>
+                          <td className="p-2">{resolucion.fecha_resolucion}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 ) : (
                   <div className="p-2 text-gray-500">
-                    {busqueda.trim().length > 0
-                      ? "Sin resultados"
-                      : "Ingrese texto para buscar"}
+                    No hay resoluciones disponibles
                   </div>
                 )}
               </div>
@@ -102,7 +148,11 @@ export default function EmisionResolucion() {
                 &lt;&lt; Volver atrás
               </Button>
               <div className="mb-2">
-                <strong>N° de Expediente:</strong> {expediente}
+                <strong>N° de Resolución:</strong>{" "}
+                {seleccionado.numero_resolucion}
+              </div>
+              <div className="mb-2">
+                <strong>N° de Expediente:</strong> {seleccionado.nro_expediente}
               </div>
               <div className="mb-2">
                 <strong>Administrado:</strong> {seleccionado.nombre_completo}
@@ -111,20 +161,30 @@ export default function EmisionResolucion() {
                 <strong>DNI:</strong> {seleccionado.dni}
               </div>
               <div className="mb-2">
-                <strong>Fecha de reg.:</strong> {seleccionado.fecha_registro}
+                <strong>Fecha de Resolución:</strong>{" "}
+                {seleccionado.fecha_resolucion}
               </div>
-              <Button color="primary" onPress={() => onDescargarResolucion(seleccionado)}>
-                Descargar Resolución
+              <Button
+                color="primary"
+                onPress={handleDescargar}
+                isLoading={cargando}
+              >
+                {cargando ? "Descargando..." : "Descargar Resolución"}
               </Button>
             </>
           )}
         </CardBody>
       </Card>
 
-      {/* Renderizado de modales con ModalRenderer */}
-      <ModalRenderer
-        modal={modal}
-        closeModal={() => setModal({ type: "" })}
+      <SuccessModal
+        isOpen={success}
+        onClose={() => setSuccess(false)}
+        message="Resolución descargada correctamente"
+      />
+      <ErrorModal
+        isOpen={error}
+        onClose={() => setError(false)}
+        message={errorMessage || "Error al descargar resolución"}
       />
     </div>
   );
