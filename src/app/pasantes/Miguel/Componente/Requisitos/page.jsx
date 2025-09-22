@@ -2,11 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import { Button } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
 import { ModalRenderer } from "@/components/custom/custom_Miguel/VerificacionTecnica/ModalRenderer";
 
-export default function Requisitos() {
-  const router = useRouter();
+export default function Requisitos({ onBack }) {
   const [expediente, setExpediente] = useState("");
   const [editando, setEditando] = useState(false);
   const [requisitos, setRequisitos] = useState([
@@ -64,11 +62,11 @@ export default function Requisitos() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      {/* Botón volver atrás */}
+      {/* Botón volver atrás - MODIFICADO */}
       <Button
         size="sm"
         variant="light"
-        onPress={() => router.back()}
+        onPress={onBack}
         className="mb-4"
       >
         &lt;&lt; Volver atrás

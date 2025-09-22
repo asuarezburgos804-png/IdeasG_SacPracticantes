@@ -10,11 +10,9 @@ import {
   Input,
   Textarea
 } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
 import { obtenerPisosPorExpediente, guardarPisos } from "@/app/services/Alexander/VerificacionCuadroAreas/datosPisos";
 
-export default function VerificacionCuadroAreas() {
-  const router = useRouter();
+export default function VerificacionCuadroAreas({ onBack }) {
   const [pisos, setPisos] = useState([]);
   const [modoEdicion, setModoEdicion] = useState(false);
   const [cargando, setCargando] = useState(false);
@@ -112,10 +110,11 @@ export default function VerificacionCuadroAreas() {
       <Card>
         <CardHeader className="flex justify-between items-center">
           <h2 className="text-xl font-bold">Técnico verificador</h2>
+          {/* Botón volver atrás - MODIFICADO */}
           <Button
             size="sm"
             variant="light"
-            onPress={() => router.back()}
+            onPress={onBack}
           >
             &lt;&lt; Volver atrás
           </Button>

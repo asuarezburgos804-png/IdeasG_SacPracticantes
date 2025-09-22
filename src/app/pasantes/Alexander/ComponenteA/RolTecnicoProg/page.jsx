@@ -9,12 +9,10 @@ import {
   Button,
   Input,
 } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
 import { buscarExpedientes, actualizarFechaVerificacion } from "@/app/services/Alexander/RolTecnicoProg/buscarExpedientes";
 import { programarVerificacion } from "@/app/services/Alexander/RolTecnicoProg/programarVerificacion";
 
-export default function Programacion() {
-  const router = useRouter();
+export default function Programacion({ onVerificacionTecnica }) {
   const [busqueda, setBusqueda] = useState("");
   const [resultados, setResultados] = useState([]);
   const [expedienteSeleccionado, setExpedienteSeleccionado] = useState(null);
@@ -52,14 +50,6 @@ export default function Programacion() {
 
   // Función para redirigir a verificación técnica con datos
   const handleRedirigirVerificacionTecnica = () => {
-    // Guardar el estado actual en sessionStorage para poder volver
-    sessionStorage.setItem('tecnicoVerificadorEstado', JSON.stringify({
-      busqueda,
-      resultados,
-      expedienteSeleccionado,
-      modo: "seleccionAccion"
-    }));
-    
     // Convertir nuestros datos al formato que espera el componente de verificación técnica
     const datosVerificacion = {
       id_solicitud: expedienteSeleccionado.id,
@@ -69,12 +59,8 @@ export default function Programacion() {
       fecha_registro: new Date().toISOString().split('T')[0] // Fecha actual como ejemplo
     };
     
-    // Almacenar datos en sessionStorage para compartirlos entre componentes
-    sessionStorage.setItem('expedienteVerificacion', JSON.stringify(datosVerificacion));
-    sessionStorage.setItem('origenVerificacion', 'tecnicoVerificador');
-    
-    // Redirigir a la ruta del componente de verificación técnica
-    router.push("/pasantes/Miguel/Componente/VerificacionTecnica");
+    // Llamar a la función del padre para cambiar a la vista de verificación técnica
+    onVerificacionTecnica("verificacion-tecnica", datosVerificacion, "tecnicoVerificador");
   };
 
   // Función para programar verificación
@@ -124,19 +110,6 @@ export default function Programacion() {
       setHora("");
     }
   };
-
-  // Restaurar estado al cargar el componente
-  useEffect(() => {
-    const estadoGuardado = sessionStorage.getItem('tecnicoVerificadorEstado');
-    if (estadoGuardado) {
-      const estado = JSON.parse(estadoGuardado);
-      setBusqueda(estado.busqueda);
-      setResultados(estado.resultados);
-      setExpedienteSeleccionado(estado.expedienteSeleccionado);
-      setModo(estado.modo);
-      sessionStorage.removeItem('tecnicoVerificadorEstado');
-    }
-  }, []);
 
   return (
     <div className="p-4 max-w-4xl mx-auto">

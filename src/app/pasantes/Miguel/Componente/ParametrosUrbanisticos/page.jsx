@@ -2,10 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { Button, Input, Modal } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
 
-export default function ParametrosUrbanisticos() {
-  const router = useRouter();
+export default function ParametrosUrbanisticos({ onBack }) {
   const [tab, setTab] = useState("urbanisticos");
   const [areaTerritorial, setAreaTerritorial] = useState("");
   const [areaActUrb, setAreaActUrb] = useState("");
@@ -40,11 +38,11 @@ export default function ParametrosUrbanisticos() {
 
   return (
     <div className="p-4 max-w-lg mx-auto">
-      {/* Volver atrás */}
+      {/* Volver atrás - MODIFICADO */}
       <Button
         size="sm"
         variant="light"
-        onPress={() => router.back()}
+        onPress={onBack}
         className="mb-4"
       >
         &lt;&lt; Volver atrás

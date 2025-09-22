@@ -17,13 +17,17 @@ import { BuildingIcon } from "@/icons/Alexander/icons";
 import Image from "next/image";
 
 // Importa tus componentes
-import MesaDePartesRol from "../Alexander/ComponenteA/MesaDePartes/page";
-import Programacion from "../Alexander/ComponenteA/RolTecnicoProg/page";
-import Acotar from "../Miguel/Componente/Acotar/page";
-import AsignarTecnico from "../Fabricio/Componente/AsignarTecnico/page";
-import Liquidacion from "../Alexander/ComponenteA/Liquidacion/page";
-import VerificacionTitularidad from "../Alexander/ComponenteA/VerificacionTitularidad/page";
-import EmisionResolucion from "../Alexander/ComponenteA/EmisionDeResolucion/page";
+  import MesaDePartesRol from "../Alexander/ComponenteA/MesaDePartes/page";
+  import Programacion from "../Alexander/ComponenteA/RolTecnicoProg/page";
+  import Acotar from "../Miguel/Componente/Acotar/page";
+  import AsignarTecnico from "../Fabricio/Componente/AsignarTecnico/page";
+  import Liquidacion from "../Alexander/ComponenteA/Liquidacion/page";
+  import VerificacionTitularidad from "../Alexander/ComponenteA/VerificacionTitularidad/page";
+  import EmisionResolucion from "../Alexander/ComponenteA/EmisionDeResolucion/page";
+  import VerificacionTecnica from "../Miguel/Componente/VerificacionTecnica/page";
+  import ParametrosUrbanisticos from "../Miguel/Componente/ParametrosUrbanisticos/page";
+  import VerificacionCuadroAreas from "../Alexander/ComponenteA/VerificacionCuadroAreas/page";
+  import Requisitos from "../Miguel/Componente/Requisitos/page";
 
 export default function Home() {
   const router = useRouter();
@@ -31,10 +35,14 @@ export default function Home() {
 
   // 👉 Estado inicial en "default" (pantalla de bienvenida)
   const [selectedView, setSelectedView] = useState("default");
+  const [selectedExpediente, setSelectedExpediente] = useState(null);
+  const [origenVerificacion, setOrigenVerificacion] = useState("");
 
-  const handleViewChange = (view) => {
+  const handleViewChange = (view, expediente = null, origen = "") => {
     setSelectedView(view);
     setIsMenuOpen(false);
+    setSelectedExpediente(expediente);
+    setOrigenVerificacion(origen);
   };
 
   return (
@@ -176,12 +184,62 @@ export default function Home() {
 
           {/* 👇 Vistas de cada módulo */}
           {selectedView === "mesa" && <MesaDePartesRol />}
-          {selectedView === "programacion" && <Programacion />}
+          {selectedView === "programacion" && (
+            <Programacion onVerificacionTecnica={handleViewChange} />
+          )}
           {selectedView === "acotar" && <Acotar />}
           {selectedView === "asignar" && <AsignarTecnico />}
           {selectedView === "liquidacion" && <Liquidacion />}
           {selectedView === "verificacion" && <VerificacionTitularidad />}
           {selectedView === "resolucion" && <EmisionResolucion />}
+          
+          {/* Vista de Verificación Técnica */}
+          {selectedView === "verificacion-tecnica" && (
+            <VerificacionTecnica 
+              expediente={selectedExpediente} 
+              origen={origenVerificacion}
+              onBack={() => handleViewChange("programacion")}
+              onNavigate={handleViewChange}
+            />
+          )}
+          
+          {/* Sub-vistas de Verificación Técnica */}
+          {selectedView === "verificacion-administrativa" && (
+            <VerificacionAdministrativa 
+              expediente={selectedExpediente}
+              onBack={() => handleViewChange("verificacion-tecnica", selectedExpediente, origenVerificacion)}
+            />
+          )}
+          {selectedView === "observaciones" && (
+            <Observaciones 
+              expediente={selectedExpediente}
+              onBack={() => handleViewChange("verificacion-tecnica", selectedExpediente, origenVerificacion)}
+            />
+          )}
+          {selectedView === "parametros-urbanisticos" && (
+            <ParametrosUrbanisticos 
+              expediente={selectedExpediente}
+              onBack={() => handleViewChange("verificacion-tecnica", selectedExpediente, origenVerificacion)}
+            />
+          )}
+          {selectedView === "documentos-presentados" && (
+            <DocumentosPresentados 
+              expediente={selectedExpediente}
+              onBack={() => handleViewChange("verificacion-tecnica", selectedExpediente, origenVerificacion)}
+            />
+          )}
+          {selectedView === "verificacion-cuadro-areas" && (
+            <VerificacionCuadroAreas 
+              expediente={selectedExpediente}
+              onBack={() => handleViewChange("verificacion-tecnica", selectedExpediente, origenVerificacion)}
+            />
+          )}
+          {selectedView === "requisitos" && (
+            <Requisitos 
+              expediente={selectedExpediente}
+              onBack={() => handleViewChange("verificacion-tecnica", selectedExpediente, origenVerificacion)}
+            />
+          )}
         </div>
       </main>
     </div>
