@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Button, Input, Modal } from "@nextui-org/react";
+import { Button, Input, Modal, ModalContent, ModalHeader, ModalBody, Card } from "@nextui-org/react";
 
 export default function ParametrosUrbanisticos({ onBack }) {
   const [tab, setTab] = useState("urbanisticos");
@@ -12,7 +12,7 @@ export default function ParametrosUrbanisticos({ onBack }) {
   const [modalMensaje, setModalMensaje] = useState({ open: false, tipo: "", texto: "" });
   const [expediente, setExpediente] = useState("");
 
-  // Traer el expediente desde sessionStorage al cargar
+  // Traer expediente desde sessionStorage
   useEffect(() => {
     const exp = sessionStorage.getItem("expedienteVerificacion");
     if (exp) {
@@ -23,9 +23,7 @@ export default function ParametrosUrbanisticos({ onBack }) {
 
   const handleGuardar = () => {
     setModalMensaje({ open: true, tipo: "exito", texto: "¡Parámetros guardados correctamente!" });
-    if (tab === "edificatorios") {
-      setTab("urbanisticos");
-    }
+    setTab("urbanisticos");
   };
 
   const handleCancelar = () => {
@@ -37,114 +35,117 @@ export default function ParametrosUrbanisticos({ onBack }) {
   };
 
   return (
-    <div className="p-4 max-w-lg mx-auto">
-      {/* Volver atrás - MODIFICADO */}
+    <div className="p-6 max-w-2xl mx-auto">
+      {/* Botón volver */}
       <Button
         size="sm"
-        variant="light"
+        variant="flat"
         onPress={onBack}
-        className="mb-4"
+        className="mb-6"
       >
-        &lt;&lt; Volver atrás
+        ⬅ Volver atrás
       </Button>
 
-      {/* N° de expediente */}
-      <div className="mb-2 font-semibold text-lg">
-        N° de expediente: {expediente || "----"}
-      </div>
+      {/* Expediente */}
+      <Card className="p-5 mb-6 shadow-md rounded-xl border border-gray-200">
+        <div className="text-gray-600">N° de expediente</div>
+        <div className="text-blue-600 text-lg font-semibold">{expediente || "----"}</div>
+      </Card>
 
-      {/* Parámetros */}
-      <div className="mb-4">
-        <strong>Parámetros:</strong>{" "}
-        <span
-          className="text-blue-600 cursor-pointer"
-          onClick={() => console.log("Editar parámetros")}
+      {/* Tabs */}
+      <div className="flex gap-3 mb-6">
+        <Button
+          variant={tab === "urbanisticos" ? "solid" : "flat"}
+          color="primary"
+          onPress={() => setTab("urbanisticos")}
+          className="flex-1"
         >
-          Editar parámetros
-        </span>
-      </div>
-
-      {/* Tabs Urbanisticos / Edificatorios */}
-      <div className="mb-4">
-        <span
-          className={`cursor-pointer mr-4 ${tab === "urbanisticos" ? "font-bold" : ""}`}
-          onClick={() => setTab("urbanisticos")}
-        >
-          Urbanisticos
-        </span>
-        <span
-          className={`cursor-pointer ${tab === "edificatorios" ? "font-bold" : ""}`}
-          onClick={() => setTab("edificatorios")}
+          Urbanísticos
+        </Button>
+        <Button
+          variant={tab === "edificatorios" ? "solid" : "flat"}
+          color="primary"
+          onPress={() => setTab("edificatorios")}
+          className="flex-1"
         >
           Edificatorios
-        </span>
+        </Button>
       </div>
 
-      {/* Contenido de tabs */}
+      {/* Contenido */}
       {tab === "urbanisticos" && (
-        <div className="space-y-2">
-          <div>Área territorial: 500 m²</div>
-          <div>Área de Act. Urb: 300 m²</div>
-          <div>Zonificación: RDM-2</div>
-          <div>Área de lote normativo M2: 450 m²</div>
-        </div>
+        <Card className="p-6 shadow-sm rounded-xl border border-gray-200 space-y-3">
+          <div className="flex justify-between">
+            <span className="font-medium text-gray-700">Área territorial</span>
+            <span className="text-gray-900 font-semibold">500 m²</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="font-medium text-gray-700">Área de Act. Urb</span>
+            <span className="text-gray-900 font-semibold">300 m²</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="font-medium text-gray-700">Zonificación</span>
+            <span className="text-gray-900 font-semibold">RDM-2</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="font-medium text-gray-700">Área de lote normativo</span>
+            <span className="text-gray-900 font-semibold">450 m²</span>
+          </div>
+        </Card>
       )}
 
       {tab === "edificatorios" && (
-        <div className="space-y-4">
-          <div>
-            <div>Área Territorial:</div>
-            <Input
-              placeholder="Para escribir"
-              value={areaTerritorial}
-              onChange={(e) => setAreaTerritorial(e.target.value)}
-            />
-          </div>
-          <div>
-            <div>Área de Act. Urb:</div>
-            <Input
-              placeholder="Para escribir"
-              value={areaActUrb}
-              onChange={(e) => setAreaActUrb(e.target.value)}
-            />
-          </div>
-          <div>
-            <div>Zonificación:</div>
-            <Input
-              placeholder="Para escribir"
-              value={zonificacion}
-              onChange={(e) => setZonificacion(e.target.value)}
-            />
-          </div>
-          <div>
-            <div>Área de lote normativo M2:</div>
-            <Input
-              placeholder="Para escribir"
-              value={areaLote}
-              onChange={(e) => setAreaLote(e.target.value)}
-            />
-          </div>
+        <Card className="p-6 shadow-sm rounded-xl border border-gray-200 space-y-5">
+          <Input
+            label="Área Territorial"
+            placeholder="Escribe el área"
+            value={areaTerritorial}
+            onChange={(e) => setAreaTerritorial(e.target.value)}
+          />
+          <Input
+            label="Área de Act. Urb"
+            placeholder="Escribe el área"
+            value={areaActUrb}
+            onChange={(e) => setAreaActUrb(e.target.value)}
+          />
+          <Input
+            label="Zonificación"
+            placeholder="Ej: RDM-2"
+            value={zonificacion}
+            onChange={(e) => setZonificacion(e.target.value)}
+          />
+          <Input
+            label="Área de lote normativo (m²)"
+            placeholder="Escribe el área"
+            value={areaLote}
+            onChange={(e) => setAreaLote(e.target.value)}
+          />
 
-          {/* Botones Guardar / Cancelar */}
-          <div className="flex gap-4 mt-4">
+          {/* Botones */}
+          <div className="flex gap-4 pt-2">
             <Button color="primary" onPress={handleGuardar} className="flex-1">
-              Guardar parámetros
+              Guardar
             </Button>
-            <Button color="default" onPress={handleCancelar} className="flex-1">
+            <Button variant="flat" onPress={handleCancelar} className="flex-1">
               Cancelar
             </Button>
           </div>
-        </div>
+        </Card>
       )}
 
-      {/* Modal de mensaje */}
+      {/* Modal */}
       <Modal
-        closeButton
-        aria-labelledby="modal-title"
-        open={modalMensaje.open}
+        isOpen={modalMensaje.open}
         onClose={() => setModalMensaje({ ...modalMensaje, open: false })}
       >
-        <Modal.Body>{modalMensaje.texto}</Modal.Body>
+        <ModalContent>
+          <ModalHeader className="text-green-600 font-bold">
+            ✅ {modalMensaje.tipo === "exito" ? "Éxito" : "Mensaje"}
+          </ModalHeader>
+          <ModalBody>
+            <p>{modalMensaje.texto}</p>
+          </ModalBody>
+        </ModalContent>
       </Modal>
     </div>
   );
